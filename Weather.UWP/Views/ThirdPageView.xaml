@@ -1,0 +1,65 @@
+﻿<Page
+    x:Class="Weather.UWP.Views.ThirdPageView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Weather.UWP.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+   >
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Styles/ThirdPageViewStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid Background="#b54859">
+        <Grid Grid.Row="0" Grid.Column="0">
+            <Button x:Name="GoBack" 
+                    Style="{StaticResource NavigationBackButtonNormalStyle}"/>
+        </Grid>
+
+        <Grid Grid.Row="1" Grid.Column="1" >
+
+            <ListView x:Name="List" 
+                      ItemsSource="{Binding WeatherCollection}" 
+                      IsItemClickEnabled="True">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontFamily="{StaticResource CustomFont}"
+                                       Text="{Binding DayTime}"
+                                       Style="{StaticResource WeatherColl25}"/>
+                            <Image Width="80" Source="{Binding Icon, Converter={StaticResource JsonDataIconToImage}, ConverterParameter='ms-appx:///Assets/{0}.png', Mode=OneWay}"/>
+                            <TextBlock FontFamily="{StaticResource CustomFont}"
+                                       Text="{Binding TemperatureCelsius}"
+                                       Visibility="{Binding IsCelsiusClicked, Converter={StaticResource BoolToVisibility}, Mode=OneWay}"
+                                       Style="{StaticResource WeatherColl20}"/>
+                            <TextBlock FontFamily="{StaticResource CustomFont}" 
+                                       Text="{Binding TemperatureFahrenheit}"
+                                       Visibility="{Binding IsFahrengeitClicked, Converter={StaticResource BoolToVisibility}, Mode=OneWay}"
+                                       Style="{StaticResource WeatherColl20}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+
+        <Grid Grid.Row="0" Grid.Column="1">
+            <TextBlock 
+                Style="{StaticResource CityName}"
+                Text="{Binding CityName}"/>
+        </Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.05*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+    </Grid>
+</Page>
